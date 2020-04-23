@@ -19,16 +19,17 @@ export class LoginComponent implements OnInit {
 
 
   constructor(private toastr: ToastrService,
-              private auth: AuthService) {}
+    private auth: AuthService) { }
 
   ngOnInit() {
     this.initForm();
-    console.log(this.loginForm.controls.state);
+    console.log(this.loginForm.controls);
   }
+  get f() { return this.loginForm.controls; }
 
   public initForm(): void {
     this.loginForm = new FormGroup({
-      userName: new FormControl('',[
+      userName: new FormControl('', [
         Validators.required
       ]),
       email: new FormControl('', [
@@ -39,16 +40,17 @@ export class LoginComponent implements OnInit {
         Validators.required,
         Validators.minLength(6),
       ]),
-      confirmPassword: new FormControl('',[
+      confirmPassword: new FormControl('', [
         Validators.required,
         Validators.minLength(6)
       ])
     });
   }
 
-  public submitForm() {
-    console.log(this.loginForm.controls);
-    this.toastr.success('This is success Form.', 'Success!');
+
+
+  public submitForm(): void {
+    console.log(this.loginForm.value);
   }
 
   cancelForm() {
