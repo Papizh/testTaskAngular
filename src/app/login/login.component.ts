@@ -57,7 +57,6 @@ export class LoginComponent implements OnInit {
   public checkPasswords(loginForm: FormGroup) {
     const pass = loginForm.controls.password.value;
     const confirmPass = loginForm.controls.confirmPassword.value;
-    console.log(pass, confirmPass);
     return pass === confirmPass ? null : { notSame: true };
   }
 

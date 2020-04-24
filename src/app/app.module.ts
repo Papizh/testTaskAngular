@@ -10,12 +10,17 @@ import { ProfileComponent } from './profile/profile.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ToastrModule } from 'ngx-toastr';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { HeaderComponent } from './header/header.component';
+import { HttpClientModule } from '@angular/common/http';
+import { NewsService } from './services/news.service';
+import { AuthService } from './services/auth.service';
+import { AuthGuard } from './guards/auth.guard';
 
 
 @NgModule({
@@ -24,9 +29,11 @@ import { MatInputModule } from '@angular/material/input';
     LoginComponent,
     MainComponent,
     NewsComponent,
-    ProfileComponent
+    ProfileComponent,
+    HeaderComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule, // required animations module
@@ -36,8 +43,10 @@ import { MatInputModule } from '@angular/material/input';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    FormsModule
   ],
-  providers: [],
+  
+  providers: [NewsService,AuthService,AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

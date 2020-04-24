@@ -6,10 +6,13 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
+ 
+  constructor() {
+   
 
-  constructor() { }
+  }
 
-  public login(userData: User){
+  public login() {
     localStorage.setItem('ACCESS_TOKEN', "access_token");
   }
   public isLoggedIn() {
