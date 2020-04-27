@@ -1,20 +1,20 @@
 <section class="section">
-    <div class="container">
-      <div class="columns is-multiline">
-  
-        <!-- loop over our users and give them each a card -->
-        <div class="column is-4" *ngFor="let user of users">
-          <div *ngIf='user' class="card">
-  
-            <img class="card-img-top" src="{{user.avatar_url}}" alt="">
-            <div class="card-body">
-              <h4 class="card-title">{{user.login}}</h4>
-              <p class="card-text">{{user.id}}</p>
-              <button class="btn btn-primary">details</button>
-            </div>
+  <div class="container">
+    <div class="columns is-multiline">
+      <h2> These are the first 12 Github accounts received by GET request</h2>
+      <!-- loop over our users and give them each a card -->
+      <div class="column is-4" *ngFor="let user of users">
+        <div *ngIf='user' class="card">
+
+          <img class="card-img-top" src="{{user.avatar_url}}" alt="">
+          <div class="card-body">
+            <h4 class="card-title">{{user.login}}</h4>
+            <p class="card-text">{{user.id}}</p>
+            <button class="btn btn-primary">details</button>
           </div>
         </div>
-  
       </div>
+
     </div>
-  </section>
+  </div>
+</section>

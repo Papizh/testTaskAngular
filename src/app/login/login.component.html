@@ -13,7 +13,7 @@
     <div class="form-group">
       <label for="email">email</label>
       <input type="text" formControlName="email" class="form-control" />
-      <div *ngIf="f.email.touched && f.email.invalid" class="alert alert-danger">
+      <div *ngIf="f.email.errors" class="alert alert-danger">
         <div *ngIf="f.email.errors.required">Email is required.</div>
         <div *ngIf="f.email.errors.email">Please, enter valid email address.</div>
       </div>
@@ -22,9 +22,9 @@
       <label for="password">Password</label>
       <input type="password" [formControl]="loginForm.controls['password']" class="form-control" />
 
-      <div *ngIf="f.password.touched && f.password.errors" class="alert alert-danger">
+      <div *ngIf="f.password.touched && f.password.errors " class="alert alert-danger">
         <div *ngIf="f.password.errors.required" class="">Password is required</div>
-        <div *ngIf="f.password.errors.minlength">Min lenght 6 </div>
+        <div *ngIf="f.password.errors.minlength">Min lenght 5 </div>
       </div>
     </div>
 
@@ -42,7 +42,12 @@
         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
         Login
       </button>
-      <a routerLink="/register" class="btn btn-link">Register</a>
+      
+
+      <button (click)='cancelForm()'  class="btn btn-primary">
+        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+        Reset forms
+      </button>
     </div>
   </form>
 </div>

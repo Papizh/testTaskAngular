@@ -25,18 +25,18 @@ export class LoginComponent implements OnInit {
   loading = false;
   submitted = false;
   error = '';
-  returnUrl= '';
+  returnUrl = 'profile';
   matcher = new MyErrorStateMatcher();
 
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
     this.initForm();
-    console.log(this.loginForm.controls);
   }
   get f() { return this.loginForm.controls; }
 
@@ -63,8 +63,6 @@ export class LoginComponent implements OnInit {
       {
         validators: this.checkPasswords
       });
-
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
   public checkPasswords(loginForm: FormGroup) {
     const pass = loginForm.controls.password.value;
@@ -74,30 +72,26 @@ export class LoginComponent implements OnInit {
 
 
   public submitForm(): void {
-
     this.submitted = true;
-
     if (this.loginForm.invalid) {
       return;
     }
-
     this.authService.login(this.f.userName.value, this.f.password.value)
       .pipe(first())
       .subscribe(
         data => {
           this.router.navigate([this.returnUrl]);
+          this.toastr.success('User login success');
         },
         error => {
           this.error = error;
-          this.loading = false;
+          this.toastr.error(' Username or password is incorrect ')
         });
-
-
   }
 
   cancelForm() {
     this.loginForm.reset();
-    console.log(this.loginForm.controls);
+
   }
 
 }
