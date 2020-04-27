@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators, FormGroupDirective, NgForm } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormGroupDirective, NgForm, FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { AuthService } from '../services/auth.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { pipe } from 'rxjs';
+import { first } from 'rxjs/operators';
+import { error } from '@angular/compiler/src/util';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -19,10 +24,15 @@ export class LoginComponent implements OnInit {
   public emailPattern = '[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?';
   loading = false;
   submitted = false;
-  returnUrl: string;
+  error = '';
+  returnUrl= '';
   matcher = new MyErrorStateMatcher();
 
-  constructor(private toastr: ToastrService) { }
+  constructor(private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private authService: AuthService
+  ) { }
 
   ngOnInit() {
     this.initForm();
@@ -43,8 +53,8 @@ export class LoginComponent implements OnInit {
       ]),
       password: new FormControl('', [
         Validators.required,
-        Validators.minLength(6),
-        
+        Validators.minLength(5),
+
       ]),
       confirmPassword: new FormControl('', [
         Validators.required,
@@ -53,6 +63,8 @@ export class LoginComponent implements OnInit {
       {
         validators: this.checkPasswords
       });
+
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
   public checkPasswords(loginForm: FormGroup) {
     const pass = loginForm.controls.password.value;
@@ -62,7 +74,25 @@ export class LoginComponent implements OnInit {
 
 
   public submitForm(): void {
-    console.log(this.loginForm.value);
+
+    this.submitted = true;
+
+    if (this.loginForm.invalid) {
+      return;
+    }
+
+    this.authService.login(this.f.userName.value, this.f.password.value)
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.router.navigate([this.returnUrl]);
+        },
+        error => {
+          this.error = error;
+          this.loading = false;
+        });
+
+
   }
 
   cancelForm() {

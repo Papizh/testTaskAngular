@@ -10,9 +10,7 @@ export class MainComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    localStorage.setItem("username", "Admin");
-    localStorage.setItem("password", "12345");
-    console.log("set local s")
+   
   }
 
 }
