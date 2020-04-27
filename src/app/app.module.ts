@@ -44,7 +44,7 @@ import { ErrorInterceptor } from './helpers/error.interceptor';
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot({
       timeOut: 5000,
-      positionClass: 'toast-bottom-right',
+      positionClass: 'toast-top-right',
       preventDuplicates: true,
     }),
     ReactiveFormsModule,

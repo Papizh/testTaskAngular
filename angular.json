@@ -7,9 +7,7 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss",
-          "node_modules/ngx-toastr/toastr.css" 
-        }
+          "style": "scss"
       },
       "root": "",
       "sourceRoot": "src",
